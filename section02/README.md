@@ -300,3 +300,55 @@ console.log(
 추가적인 프로퍼티나 메서드를 가질 수 있다.
 객체 + 추가된 기능(호출, 선언) = 함수(Function)
 객체 + 추가된 기능(순차 저장, 순회) = 배열(Array)
+
+## ch6. 반복문으로 배열과 객체 순회하기
+
+### 순회란?
+
+- 배열, 객체에 저장된 여러 개의 값에 순서대로 하나씩 접근하는 것을 말함
+
+#### 1. 배열순회
+
+```
+let numbers = [1, 2, 3];
+```
+
+##### 1.1 배열 인덱스
+
+##### 1.2 for of 반복문
+
+#### 2. 객체순회
+
+##### 2.1 Object.keys 사용
+
+- 객체에서 key값들만 뽑아서 새로운 배열로 반환
+
+##### 2.2 Object.values
+
+- 객체에서 value 값들만 뽑아서 새로운 배열로 반환
+
+##### 2.3 for in
+
+- person 객체의 property의 key를 순서대로 key라는 변수에 할당
+
+  ```
+  let person = {
+    name: "이정환",
+    age: 27,
+    hobby: "테니스",
+  };
+  ```
+
+- 반복문을 이용한 배열, 객체 순회
+
+  ```
+  for(let value of numbers){
+    console.log(value);
+  }
+
+  for(let key in Object.keys(person)){
+    console.log(key);
+  }
+  ```
+
+for ~ of 는 배열에만 쓸 수 있고 for ~ in은 객체에만 쓸 수 있다.
