@@ -303,33 +303,44 @@ console.log(
 
 ## ch6. 반복문으로 배열과 객체 순회하기
 
-### 순회란?
+순회란?
 
-- 배열, 객체에 저장된 여러 개의 값에 순서대로 하나씩 접근하는 것을 말함
+배열, 객체에 저장된 여러 개의 값에 순서대로 하나씩 접근하는 것을 말함
 
-#### 1. 배열순회
+### 1. 배열순회
 
-```
-let numbers = [1, 2, 3];
-```
+- 배열 인덱스
 
-##### 1.1 배열 인덱스
+  ```
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+  ```
 
-##### 1.2 for of 반복문
+- for of 반복문
+  ```
+  for (let item of arr) {
+    console.log(item);
+  }
+  ```
 
-#### 2. 객체순회
+### 2. 객체순회
 
-##### 2.1 Object.keys 사용
+- Object.keys 사용
 
-- 객체에서 key값들만 뽑아서 새로운 배열로 반환
+  객체에서 key값들만 뽑아서 새로운 배열로 반환
 
-##### 2.2 Object.values
+  `let keys = Object.keys(person);`
 
-- 객체에서 value 값들만 뽑아서 새로운 배열로 반환
+- Object.values
 
-##### 2.3 for in
+  객체에서 value 값들만 뽑아서 새로운 배열로 반환
 
-- person 객체의 property의 key를 순서대로 key라는 변수에 할당
+  `let values = Object.values(person);`
+
+- for in
+
+  person 객체의 property의 key를 순서대로 key라는 변수에 할당
 
   ```
   let person = {
@@ -351,4 +362,79 @@ let numbers = [1, 2, 3];
   }
   ```
 
+#### 차이점
+
 for ~ of 는 배열에만 쓸 수 있고 for ~ in은 객체에만 쓸 수 있다.
+
+## ch7. 배열 메서드 1. 요소 조작
+
+### 1. push
+
+배열의 맨 뒤에 새로운 요소를 추가하는 메서드
+
+요소들을 추가한 뒤 배열의 길이를 반환한다.
+
+```
+const newLength = arr1.push(4, 5, 6, 7);
+```
+
+### 2. pop
+
+배열의 맨 뒤에 있는 요소를 제거하고, 반환
+
+```
+const poppedItem = arr2.pop();
+```
+
+### 3. shift
+
+배열의 맨 앞에 있는 요소를 제거, 반환
+
+```
+const shiftedItem = arr3.shift();
+```
+
+### 4. unshift
+
+배열의 맨 앞에 새로운 요소를 추가하는 메서드
+
+변경된 배열의 길이를 동시에 반환
+
+```
+const newLength2 = arr4.unshift(0);
+```
+
+### 참고
+
+shift와 unshift는 push나 pop보다는 느리게 동작한다.
+
+배열은 순차적으로 값을 저장하는 자료형이기 때문에 push나 pop은 맨 뒤에 있는 요소를 추가, 제거하면 되지만
+
+shift와 unshift는 맨 앞에 있는 요소들을 추가, 제거하면서 뒤에있는 요소들의 인덱스가 모두 변경되기 떄문에 비교적 느리게 동작한다.
+
+되도록이면 push나 pop을 이용하는 것이 좋다.
+
+### 5. slice
+
+배열의 특정 범위를 잘라내서 새로운 배열로 반환
+slice 메서드를 호출 후 시작 인덱스와 끝을 지정하는 인덱스를 쓰면 되는데, 여기서 마지막 인덱스 + 1을 해야한다.
+
+만약 배열의 끝까지 자른다면 두번째 인수는 생략 가능하다.
+
+배열의 뒤에서부터 잘라내고 싶다면 음수 값을 넣으면 된다.
+
+잘라내더라도 원본 배열이 바뀌는 것은 아니다.
+
+```
+let sliced = arr5.slice(2, 5);
+let sliced2 = arr5.slice(2);
+let sliced3 = arr5.slice(-3);
+```
+
+## 6. concat
+
+두 개의 서로 다른 배열을 이어 붙여서 새로운 배열을 반환
+
+```
+let concatedArr = arr6.concat(arr7);
+```
