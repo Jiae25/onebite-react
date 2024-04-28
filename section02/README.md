@@ -600,7 +600,7 @@ arr3.sort((a, b) => {
 
 - 내림차순으로 정렬하려면 조건을 반대로 설정.
 
-## 4. toSorted (가장 최근에 추가된 최신 함수)
+### 4. toSorted (가장 최근에 추가된 최신 함수)
 
 정렬된 새로운 배열을 반환하는 메서드
 
@@ -612,7 +612,7 @@ sort와의 차이점!
 const sorted = arr5.toSorted();
 ```
 
-## 5. join
+### 5. join
 
 배열의 모든 요소를 하나의 문자열로 함쳐서 반환하는 메서드
 
@@ -622,3 +622,81 @@ const joined = arr6.join("-");
 
 - join() 기본적으로 , (콤마) 가 구분자(separator)이다.
 - 구분자를 바꾸고 싶다면 인수로 다른 구분자를 넣어준다.
+
+## ch10. Date 객체와 날짜
+
+### 1. Date 객체를 생성하는 방법
+
+```
+let date1 = new Date();
+```
+
+- 생성자: new 키워드와 함께 새로운 객체를 생성하는 것
+- 아무 인수를 넣지 않으면 현재시간 출력
+
+```
+let date2 = new Date(1997, 1, 7, 10, 10, 10);
+```
+
+- 특정날짜, 시간을 기준으로 새롭게 생성할 때
+- 1997 / 1 / 7 / 10 / 10 / 10
+- , . - / 로도 사용가능
+
+### 2. 타임 스탬프
+
+특정 시간이 "1970.01.01 00시 00분 00초"로 부터 몇 ms가 지났는지를 의미하는 숫자값
+
+UTC 협정세계시 : 세계의 모든 나라가 표준으로 사용하는 시간이 시작되는 지점
+
+```
+let ts1 = date1.getTime();
+```
+
+- ts1 변수에는 UTC 타임으로부터 몇 ms가 지났는지 시간이 저장되어있다.
+
+```
+let date4 = new Date(ts1);
+```
+
+- 새로운 date 객체 생성하는데 사용할 수 있다.
+- `date1 === date4`
+
+### 3. 시간 요소들을 추출하는 방법
+
+```
+let year = date1.getFullYear();
+let month = date1.getMonth() + 1;
+let date = date1.getDate();
+
+let hour = date1.getHours();
+let minute = date1.getMinutes();
+let seconds = date1.getSeconds();
+```
+
+- JavaScript의 월은 0부터 시작하기 때문에 1월은 0으로 나오고 2월은 1로 나온다.
+- month에는 +1을 해줘서 실제 사용하는 1 ~ 12의 월로 변경해서 사용한다.
+
+### 4. 시간 수정하기
+
+```
+date1.setFullYear(2023);
+date1.setMonth(2); // 2를 전달하면 실제로는 3월이다.
+date1.setDate(30);
+date1.setHours(23);
+date1.setMinutes(59);
+date1.setSeconds(59);
+```
+
+### 5. 시간을 여러 포맷으로 출력하기
+
+```
+console.log(date1.toDateString());
+```
+
+- 시분초를 제외하고 날짜민 출력
+
+```
+console.log(date1.toLocaleString());
+```
+
+- 현지화된 포맷으로 시간 출력
