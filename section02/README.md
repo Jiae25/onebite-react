@@ -810,3 +810,218 @@ orderFood((food) => {
 - 코드가 반복되다보면 인덴트(indent, 들여쓰기)가 점점 깊어지는 형태로 코드가 진화한다.
 - 기능이 늘어날수록 가독성이 떨어진다.
 - 콜백지옥 → Promise 객체를 이용하여 해결
+
+## ch13. 비동기 작업 처리하기 2. Promise
+
+### Promise란?
+
+비동기 작업을 효율적으로 처리할 수 있도록 도와주는 자바스크립트의 내장 객체
+
+- Promise는 비동기 작업을 감싸는 객체이다.
+  - Promise 객체 > 비동기 작업 (ex. setTimeout)
+- Promise의 효능
+  - 비동기 작업 실행
+  - 비동기 작업 상태 관리
+  - 비동기 작업 결과 저장
+  - 비동기 작업 병렬 실행
+  - 비동기 작업 다시 실행
+  - 기타 등등
+
+### Promise의 3가지 상태
+
+비동기 작업 진행단계에 따라 3가지 상태로 나누어 관리
+
+- 대기 (Pending) :
+  아직 작업이 완료되지 않은 상태
+
+- 성공 (Fulfilled) :
+  비동기 작업이 성공적으로 마무리 된 상태
+
+- 실패 (Rejected) :
+  비동기 작업이 실패한 상태
+
+![image](https://github.com/Jiae25/onebite-react/assets/77441385/58dc5ed2-a1c5-451e-8d50-52f4fe6c5868)
+
+- 대기 → 성공 : 해결(resolve)
+- 대기 → 실패 : 거부(reject)
+
+### promise 객체 생성
+
+```
+const promise = new Promise((resolve, reject) => {
+  // 비동기 작업 실행하는 함수
+  // executor
+
+  setTimeout(() => {
+    console.log("안녕");
+    reject("왜 실패했는지 이유...");
+  }, 2000);
+});
+
+setTimeout(() => {
+  console.log(promise);
+}, 3000);
+```
+
+executor 함수에는 두 가지의 매개변수가 전달된다.
+
+1. resolve: promise 작업(비동기 작업)을 성공 상태로 바꾸는 함수가 들어있다.
+2. reject: promise가 관리하는 비동기 작업을 실패 상태로 바꾸는 함수가 들어있다.
+
+- `console.log(promise);`로 promise 객체를 출력해보면 PromiseState 값이 pending(대기)를 확인할 수 있다.
+
+- executor 함수에서 reject를 호출하면 프로미스의 비동기 작업 실패. resolve를 호출하면 프로미스의 비동기 작업 성공.
+
+- PromiseResult 값은 execute 함수 내부에서 resolve 함수를 호출하면서 인수로 전달해줘야 값이 나온다. 그렇지 않으면 undefined가 나온다.
+
+### promise 객체 이용
+
+```
+const promise = new Promise((resolve, reject) => {
+  // 비동기 작업 실행하는 함수
+  // executor
+
+  setTimeout(() => {
+    const num = 10;
+    if (typeof num === "number") {
+      resolve(num + 10);
+    } else {
+      reject("num이 숫자가 아닙니다");
+    }
+  }, 2000);
+});
+
+setTimeout(() => {
+  console.log(promise);
+}, 3000);
+```
+
+출력 값
+
+```
+chapter13.js:16
+Promise {<fulfilled>: 20}
+[[Prototype]] : Promise
+[[PromiseState]] : "fulfilled"
+[[PromiseResult]] : 20
+```
+
+### promise 객체의 결과 값 이용
+
+then 메서드를 호출하고 인수로 callback 함수를 넣어준다.
+`promise.then(() => {})`
+
+promise의 비동기 작업이 성공(execute 함수에서 resolve를 호출)하면
+then 메서드에 전달한 콜백함수를 실행시킨다.
+
+동시에 resolve의 인수로 전달한 결과값을 매개변수로 제공해준다.
+`resolve(num + 10)`
+
+```
+promise.then((value) => {
+  console.log(value);
+});
+```
+
+reject가 호출된다면 then 메서드는 실행되지 않는다. 이때는 catch 메서드를 사용한다.
+
+```
+promise.catch((error) => {
+  console.log(error);
+});
+```
+
+### promise 기능
+
+`then` 메서드는 프로미스를 다시 반환한다.
+
+```
+promise
+  .then((value) => {
+    console.log(value);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+```
+
+- `catch` 메서드를 호출하는 프로미스나 `then` 메서드를 호출하고 있는 프로미스나 똑같은 프로미스 객체다.
+- `then`과 `catch`를 연달아 사용하는 것을 Promise Chaining 프로미스 체이닝이라고 한다.
+
+### 함수를 사용하여 프로미스 활용
+
+객체 새롭게 생성하면서 동적으로 매개변수를 받아서 숫자값을 바꿔가면서 사용
+
+비동기 작업의 결과를 또다른 비동기 작업의 인수로 전달
+
+```
+function add10(num) {
+  const promise = new Promise((resolve, reject) => {
+    // 비동기 작업 실행하는 함수
+    // executor
+
+    setTimeout(() => {
+      if (typeof num === "number") {
+        resolve(num + 10);
+      } else {
+        reject("num이 숫자가 아닙니다");
+      }
+    }, 2000);
+  });
+
+  return promise;
+}
+
+const p = add10(0);
+p.then((result) => {
+  console.log(result);
+
+  const newP = add10(result);
+  newP.then((result) => {
+    console.log(result);
+  });
+});
+```
+
+콜백지옥 방지!
+
+- then 메서드에서 newP를 반환(return)해주면 반환된 프로미스 객체가 then 메서드 호출의 결과 값이 된다.
+
+```
+const p = add10(0);
+p.then((result) => {
+  console.log(result);
+
+  const newP = add10(result);
+  return newP; // 새로운 프로미스 객체 반환 = then 메서드의 결과값
+}).then((result) => {
+  console.log(result);
+});
+```
+
+정리
+
+- add10 함수를 호출해서 result를 연달아 전달하는 것이 가능
+- 비동기 작업이 실패할 경우 catch 메서드를 붙여서 error 출력하도록 함
+- 프로미스 객체 활용 방법
+  - API 호출
+  - 다른 서버와 통신
+
+```
+add10(0)
+  .then((result) => {
+    console.log(result);
+    return add10(result);
+  })
+  .then((result) => {
+    console.log(result);
+    return add10(result);
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
