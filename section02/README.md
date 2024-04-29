@@ -766,3 +766,47 @@ setTimeout(() => {
 4. 자바스크립트 엔진은 돌려받은 콜백함수를 실행시킨다.
 
    ![image](https://github.com/Jiae25/onebite-react/assets/77441385/5014af2a-c73e-406e-9f17-e90fed3e5c1d)
+
+## ch12. 비동기 작업 처리하기 1. 콜백함수
+
+sum 변수에 들어있는 값을 add함수 바깥에서도 이용하는 방법
+
+```
+function add(a, b, callback) {
+  setTimeout(() => {
+    const sum = a + b;
+    callback(sum);
+  }, 3000);
+}
+
+add(1, 2, (value) => {
+  console.log(value);
+});
+```
+
+- add함수를 호출할 때 인수로 비동기 처리의 결과값을 사용하고자 하는 callback 함수를 함께 전달하면 된다.
+
+- add함수에서는 세번째 인수로 전달한 callback 함수를 매개변수로 받아서 setTimeout 함수 안에서 호출하고 인수로 sum을 넣는다.
+
+정리
+
+- 비동기 작업을 하는 함수의 결과 값을 함수 외부에서 이용하고 싶다면 콜백 함수를 사용해서 비동기 함수 안에서 콜백 함수를 호출하도록 설정
+
+비동기 작업의 결과를 또다른 비동기 작업의 인수로 활용
+
+```
+orderFood((food) => {
+  console.log(food);
+  cooldownFood(food, (cooldownedFood) => {
+    console.log(cooldownedFood);
+
+    freezeFood(cooldownedFood, (freezedFood) => {
+      console.log(freezedFood);
+    });
+  });
+});
+```
+
+- 코드가 반복되다보면 인덴트(indent, 들여쓰기)가 점점 깊어지는 형태로 코드가 진화한다.
+- 기능이 늘어날수록 가독성이 떨어진다.
+- 콜백지옥 → Promise 객체를 이용하여 해결
