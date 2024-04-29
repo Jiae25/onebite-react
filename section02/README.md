@@ -1025,3 +1025,85 @@ add10(0)
     console.log(error);
   });
 ```
+
+## ch14. 비동기 작업 처리하기 3. async/await
+
+### async
+
+어떤 함수를 비동기 함수로 만들어주는 키워드
+
+함수가 프로미스를 반환하도록 변환해주는 그런 키워드
+
+```
+async function getData() {
+  return {
+    name: "이정환",
+    id: "winterlood",
+  };
+}
+
+console.log(getData());
+```
+
+- 함수 선언문 앞에 async를 붙이면 비동기 함수로 바뀐다.
+- 객체를 그대로 반환하는 함수가 아니라
+- 객체를 결과값으로 갖는 새로운 프로미스를 반환하는 함수로 변환
+
+결과값
+
+```
+Promise {<fulfilled>: {…}}
+[[Prototype]] : Promise
+[[PromiseState]] : "fulfilled"
+[[PromiseResult]] :  Object
+```
+
+만약, async가 붙어있는 함수가 일반적인 객체값을 반환하는게 아니라 애초에 프로미스를 반환하는 함수라면
+
+별다른 기능을 하지 않고 그 프로미스 객체 자체를 반환하도록 내버려둔다.
+
+```
+async function getDate() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        name: "이정환",
+        id: "winterlood",
+      });
+    }, 1500);
+  });
+}
+```
+
+### await
+
+async 함수 내부에서만 사용이 가능한 키워드
+
+비동기 함수가 다 처리되기를 기다리는 역할
+
+```
+function printData() {
+  getData().then((result) => {
+    console.log(result);
+  });
+}
+
+printData();
+```
+
+- `getData()`가 프로미스를 반환하니까 `then`메서드를 붙여서 result를 출력했다.
+
+await 사용
+
+```
+async function printData() {
+  const data = await getData();
+  console.log(data);
+}
+
+printData();
+```
+
+- `then` 메서드를 쓰지 않아도 `getData()`가 반환하는 프로미스가 종료되기를 기다린다.
+- 프로미스의 비동기 작업이 종료되면 결과 값을 넣어준다.
+- await은 async와 같이 사용한다. 그렇지 않으면 오류 발생
