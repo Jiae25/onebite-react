@@ -57,3 +57,63 @@ JavaScript 활용
     C:\Users\me>npm -v
     10.5.0
     ```
+
+## ch3. Node.js 사용하기
+
+### 프로젝트(Project)
+
+특정 목적을 갖는 프로그램의 단위
+
+- 쇼핑몰 프로그램
+- 웹 포털 프로그램
+- ...
+
+### 패키지
+
+Node.js에서 사용하는 프로그램의 단위
+
+Node.js 환경에서는 여러 개의 JavaScript 파일로 어떤 목적을 갖는 프로그램을 만들 때 패키지 단위로 프로그램을 만든다.
+
+- 쇼핑몰 패키지
+- 웹 포털 패키지
+- ...
+
+### Node.js 패키지 만들기
+
+1. 패키지의 루트 폴더 만들기. `section03`
+2. VSCode에서 `onebite-react` 전체 폴더가 아닌 `section03` 폴더를 따로 연다.
+3. `Ctrl + J`를 눌러서 VSCode 하단의 터미널을 연다.
+4. 새로운 패키지 초기화 (생성) `npm init`
+
+   package name, version, description, entry point(메인으로 실행될 JS파일) 등을 물어본다. 엔터를 눌러서 진행
+
+5. 패키지 생성 완료. package.json 설정 파일이 생성됨
+
+### 자바스크립트 파일 Node.js로 실행
+
+1. `index.js` 자바스크립트 파일 생성
+2. Node.js를 이용해서 실행하려면 터미널에서 `node index.js`를 실행.
+
+   `node + 실행시킬 파일 이름`
+
+3. 만약 현재 위치 `section03`가 아닌 `src` 폴더 아래에 js 파일이 있다면 경로를 명시해야한다.
+   `node src/index.js`
+
+4. 새로운 파일, 폴더가 만들어질때 경로는 계속해서 복잡해질 수 있기 때문에 `package.json`에서 `package script`를 이용한다.
+
+   스크립트에 명시해주면 경로를 다 명시해주지 않아도 `start` 명령으로 수행이 가능하다.
+
+   ```
+   "start" : "node src/index.js"
+   ```
+
+5. 스크립트 실행 `npm run start`
+
+   ```
+   $ npm run start
+
+   > section03@1.0.0 start
+   > node src/index.js
+
+   안녕 Node.js
+   ```
