@@ -32,3 +32,28 @@ JavaScript 활용
 - 웹 서버 (넷플릭스, 에어비엔비 등)
 - 모바일 앱 (페이스북, 인스타그램 등)
 - 데스크톱 앱 (슬랙, 디스코드 등)
+
+## ch2. Node.js 설치
+
+1.  https://nodejs.org/en
+2.  Download Node.js (LTS):
+    Long Term Support. 장기적으로 안정적이게 지원되는 버전.
+3.  Install 진행
+4.  설치가 완료되면 터미널에서 설치된 노드 버전 확인
+    `C:\Users\me>node -v`
+
+    기존에 설치되어있던 v16.13.0 삭제 후 재설치 진행
+
+5.  NPM(Node Package Manage) 설치 확인
+
+    `C:\Users\me>node -v`
+
+    NPM : 새로운 패키지 생성, 외부 라이브러리 설치/삭제 등의 유용한 기능 제공
+
+    ```
+    C:\Users\me>node -v
+    v20.12.2
+
+    C:\Users\me>npm -v
+    10.5.0
+    ```
