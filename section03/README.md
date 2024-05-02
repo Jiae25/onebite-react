@@ -117,3 +117,161 @@ Node.js 환경에서는 여러 개의 JavaScript 파일로 어떤 목적을 갖�
 
    안녕 Node.js
    ```
+
+## ch4. Node.js 모듈 시스템 이해하기
+
+### 모듈 시스템(Module System)이란?
+
+모듈을 다루는 시스템
+
+- 쇼핑몰 페이지
+  - 회원 관리 기능 - `user.js` - user 모듈
+  - 장바구니 기능 - `cart.js` - cart 모듈
+  - 결제 기능 - `payment.js` - payment 모듈
+
+이렇게 기능별로 나누어진 각각의 자바스크립트 파일을 **모듈**이라 부른다.
+
+모듈을 생성하고, 불러오고, 사용하는 등의 모듈을 다루는 다양한 기능을 제공하는 시스템을 **모듈 시스템**이라고 한다.
+
+### JavaScript의 모듈 시스템
+
+- Common JS (CJS)
+- ES Module (ESM)
+- AMD, UMD 등
+
+모듈 시스템을 이용해 math 모듈에 작성한 함수를 내보내서 다른 모듈(인덱스)에서 불러와서 사용할 수 있도록 해보자.
+`math.js`
+
+```
+// math 모듈 (계산 기능)
+function add(a, b) {
+  return a + b;
+}
+
+function sub(a, b) {
+  return a - b;
+}
+```
+
+### CJS (Common JS 모듈 시스템)
+
+1. module 내장객체에 exports라는 프로퍼티의 값으로 객체를 저장
+
+   객체 안에 프로퍼티로 내보내고 싶은 값들을 넣어줌
+
+   ```
+   // CJS
+   module.exports = {
+   add : add,
+   sub : sub,
+   };
+   ```
+
+   - add 프로퍼티 value로 내보낼 값 add 함수
+   - sub 프로퍼티 value로 내보낼 값 sub 함수
+
+   ```
+   module.exports = {
+      add,
+      sub,
+   }
+   ```
+
+   - value 값으로 사용되는 변수의 이름과 키 값이 같을 때에는 변수나 함수의 이름만 명시해줘도 알아서 저장된다.
+
+2. CommonJS 모듈 시스템에 의해 Math 모듈로 부터 내보내진다.
+
+3. 내보내진 값은 다른 모듈에서 내장함수인 `require`를 이용해서 모듈의 경로를 인수로 전달하여 사용한다.
+
+   `index.js`
+
+   ```
+   const moduleData = require("./math");
+   console.log(moduleData);
+
+   moduleData.add(1, 2); // moduleData에 객체로 저장되어있기 때문에 함수 호출 가능
+   moduleData.sub(1, 2);
+
+   ```
+
+   - `require` 함수가 현재 경로의 `math` 모듈로부터 객체 형태로 값을 반환한다.
+
+   - 객체의 구조분해 할당으로 표현
+
+   ```
+   const {add, sub} = require("./maht");
+   console.log(add(1, 2));
+   console.log(sub(1, 2));
+   ```
+
+### ES 모듈 시스템
+
+CJS 보다 최신식으로 동작한다.
+
+React에서도 사용한다.
+
+1. ES 모듈 시스템을 사용하겠다는 설정
+
+   - `package.json`에 `"type" : "module"` 이라는 옵션 추가
+   - 패키지 설정 후 CJS를 활용하는 코드를 `npm run start` 로 가동시키면 오류 발생 (함께 이용할 수 없음)
+
+2. `export` 키워드 사용하여 내보냄
+
+   `math.js`
+
+   ```
+   export {add, sub};
+   ```
+
+3. 내보내진 값을 다른 모듈에서 사용
+
+   `index.js`
+
+   ```
+   import {add, sub} from "./math.js";
+   ```
+
+   - ES 모듈시스템을 사용할때는 확장자까지 명시해줘야한다.
+
+다른 방법
+
+1. 함수 선언문 앞에 `export`를 적어준다.
+
+   `math.js`
+
+   ```
+   export function add(a, b) {
+   return a + b;
+   }
+
+   export function sub(a, b) {
+   return a - b;
+   }
+   ```
+
+2. 하나의 모듈을 대표하는 default 값을 내보내는 방법
+
+   `math.js`
+
+   ```
+   export default function multiply(a, b) {
+   return a * b;
+   }
+   ```
+
+   - 기본값으로 내보내진 함수
+     `index.js`
+
+   ```
+   import multi from "./math.js";
+   import {add, sub} from "./math.js";
+   ```
+
+   - 새로운 import 문을 만들어서 중괄호 없이 불러오도록 설정해야한다.
+   - 불러올때 이름을 마음대로 정할 수 있다.
+
+   ```
+   import mul, {add, sub} from "./math.js";
+   ```
+
+   - 동일한 경로로부터 값을 불러오는 import문을 합쳐서 사용할 수 있다.
