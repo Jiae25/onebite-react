@@ -275,3 +275,51 @@ React에서도 사용한다.
    ```
 
    - 동일한 경로로부터 값을 불러오는 import문을 합쳐서 사용할 수 있다.
+
+## ch5. Node.js 라이브러리 사용하기
+
+### 라이브러리란?
+
+프로그램을 개발할 때 필요한 다양한 기능들을 미리 만들어 모듈화 해 놓은 것
+
+- 날짜, 수학, 그래픽 라이브러리 등
+
+1. https://www.npmjs.com/
+2. 원하는 기능 검색 `randomcolor`
+3. 해당 라이브러리에서 Install 부분의 npm 명령어를 VSCode 터미널에서 실행
+4. `package.json`에 추가된 항목 확인 가능
+
+   `dependency` : 의존.
+   해당 라이브러리가 있어야 동작 가능하다.
+
+   ```
+   "dependencies": {
+      "randomcolor": "^0.6.2"
+   }
+   ```
+
+5. `package-lock.json` 파일과 `node_modules` 폴더가 자동으로 생성됨
+
+   - `package-lock.json` : `package.json`과는 다르게 실제로 설치된 정확한 버전 정보를 저장하고 있다.
+
+   - `package.json`의 `^`를 붙인건 대략적인 버전 정보이다.
+
+6. 라이브러리 사용
+
+   `index.js`
+
+   ```
+   import randomColor from "randomcolor";
+   ```
+
+   - 라이브러리에서 값을 가져올때는 경로가 아니라 라이브러리 이름만 명시하면 된다.
+
+참고!
+
+만약 `node_modules`와 `package-lock.json` 이 지워지게 되면 `package.json`의 정보만으로 라이브러리를 다시 설치할 수 있다.
+
+```
+npm install 또는 npm i 실행
+```
+
+따라서 Node.js 패키지를 공유하거나 git에 업로드할 때 node_modules는 포함시키지 않는다.
