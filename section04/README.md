@@ -1,3 +1,14 @@
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+---
+
 # ch1. React.js 소개합니다
 
 ## React.js란?
@@ -80,3 +91,95 @@ React는 동시에 발생한 업데이트를 모아서 DOM 수정 횟수를 최�
   - React는 업데이트가 발생하면 실제 DOM을 수정하기 전에 이 가상의 복제판 DOM에 먼저 반영해 본다.
   - 업데이트가 다 모인 Virtual DOM을 한번에 반영하여 DOM은 1회 수정이 된다.
   - 좋은 업데이트 성능을 어느정도 보장해준다.
+
+# ch2. 첫 React App 생성하기
+
+## React Application
+
+React로 만든 웹 서비스들을 보통 React App, React Application 이라고 불리움
+
+단순한 웹 페이지 기능을 넘어서 다양한 기능을 제공하기 때문에
+
+## React App 생성하기
+
+1. Node.js 패키지 생성
+2. React 라이브러리 설치
+3. 기타 도구 설치 및 설정 (복잡하고 까다롭기 때문에 입문자에게는 권장하기 어려움)
+
+따라서, Vite 를 이용한다.
+
+- Vite
+  - 차세대 프론트엔드 개발 툴
+  - 기본 설정이 적용된 React App 생성 가능
+  - 리액트 공식 문서에서도 권장된다.
+
+### Vite을 이용한 React App 생성
+
+1. 프로젝트를 만들 폴더에서 터미널을 켜고 `npm create vite@latest` 실행
+2. `Need to install following packages.. `는 create vite를 진행하기 위해서 추가적으로 설치해야하는 것.
+
+   `y`를 눌러서 설치 진행
+
+3. Project name : section04
+4. 프레임워크 선택 : React
+5. React 앱의 버전 선택 : JavaScript
+6. VSCode에서 새로 생긴 section04 폴더를 열어서 진행
+
+### React App의 구성
+
+- package.json
+
+  - 기본적으로 Node.js 패키지이기 때문에 package.json 파일이 있다.
+  - dependencies : react와 react-dom 라이브러리가 미리 설치되어 있다.
+  - devDependencies : 개발할 떄만 사용되는 라이브러리들이 저장되는 곳 (문법 체크 도구, 테스트 도구 등) 배포할 땐 포함되지 않는다.
+  - node_modules나 package-lock.json 파일이 없으면 아직 설치되지 않은 것으로 `npm i` 또는 `npm install` 하여 package.json 정보를 기반으로 라이브러리를 설치한다.
+    ```
+    /Documents/onebite-react/section04 (main)
+    $ npm i
+    added 278 packages, and audited 279 packages in 2m
+    ```
+  - 이렇게 많은 라이브러리들이 추가로 필요한데 직접 설치할 수 없으니 Vite을 이용해서 리액트 앱을 생성한다.
+
+- public
+
+  - svg, PNG, JPG 와 같은 이미지 파일을 보관하거나 코드가 아닌 폰트, 동영상과 같은 정적인 파일을 저장한다.
+
+- src
+
+  - source의 약자. 실제 리액트, 자바스크립트 코드를 저장하는 폴더
+
+- asset : 이미지 파일, 폰드 등의 정적 파일 보관
+
+- eslint.cjs : eslint 도구의 설정파일 (코드 스타일 설정)
+
+- .gitignore : github에 올리면 안되는 파일 명시
+
+- index.html : 리액트 앱의 기본 틀 역할
+
+- vite.config.js : vite 도구의 옵션 설정
+
+### React App 실행
+
+- package.json의 script 안에 실행시킬 수 있는 4가지의 명령어가 미리 설정되어 있다.
+
+  - dev : 리액트 앱을 개발용으로 실행
+    `npm run dev` 하면 vite가 리액트 앱을 작동시켜주고 주소가 주어진다.
+
+    ```
+    VITE v5.2.11  ready in 1011 ms
+
+    ➜  Local:   http://localhost:5173/
+    ➜  Network: use --host to expose
+    ➜  press h + enter to show help
+    ```
+
+    ```
+    h
+
+    Shortcuts
+    press r + enter to restart the server
+    press u + enter to show server url
+    press o + enter to open in browser
+    press c + enter to clear console
+    press q + enter to quit
+    ```
