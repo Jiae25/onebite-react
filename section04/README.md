@@ -183,3 +183,53 @@ React로 만든 웹 서비스들을 보통 React App, React Application 이라�
     press c + enter to clear console
     press q + enter to quit
     ```
+
+# ch3. React App 구동원리 살펴보기
+
+### React App 구동 순서
+
+1. React App 생성 (with Vite)
+2. React App 가동 (npm run dev)
+3. 콘솔에 나온 React App 접속 주소
+
+   `http://localhost:5173/`
+
+React App 에 Web Server 가 내장되어 있고
+React App 을 가동하기 위해 사용했던 `npm run dev`는 React App 서버를 가동시키는 명령어이다.
+
+### React App 접속 원리
+
+- localhost : 내 컴퓨터의 주소
+- 브라우저에서 내 컴퓨터에서 실행되고 있는 리액트 웹서버에 접속 요청을 보낸다.
+  ![image](https://github.com/Jiae25/onebite-react/assets/77441385/c677dec2-f6d0-422c-926f-53f9df6a21ba)
+
+- 포트번호(Port Number) : 하나의 컴퓨터에서 여러 대의 서버를 동작시키기 위해 필요한 주소 체계
+  ![image](https://github.com/Jiae25/onebite-react/assets/77441385/e935e11f-a0b2-4ebf-ac74-0a9aab8e7d1a)
+
+### 화면 렌더링 원리
+
+- `index.html` 파일을 브라우저에 보내준다.
+  - `<body>` 태그 안에 비어있다.
+  - `<script>` 태그로 불러오고 있는 `src/main.jsx` 자바스크립트 파일이 실행되었을 때 화면에 보여지는 것이다.
+- `main.jsx` 파일
+
+  - 리액트가 제공하는 내부 메서드를 이용하고 있다.
+
+    `ReactDOM.createRoot().render~`
+
+  - createRoot 메서드는 인수로 전달받은 HTML 요소를 리액트의 루트로 만들어주는 역할을 한다.
+  - 인수로 전달된 요소는 `document.getElementById`는 루트라고 `index.html` 파일 안에 있는 루트를 아이디로 갖는 요소를 불러온다.
+
+    `<div id="root"></div>`
+
+  - render 메서드 호출
+
+    `<App/>` 을 렌더링하는 설정
+
+  - 앱 컨포넌트를 렌더링하고 있다.
+
+    `import App from './App.jsx'`
+
+- `App.jsx` 파일 열기
+  - 함수가 HTML 태그를 리턴하면 이 함수를 컴포넌트라고 한다.
+  - function App(){}
