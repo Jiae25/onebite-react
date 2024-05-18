@@ -181,3 +181,80 @@ export default Main;
   3. 요소의 클래스를 css에 작성한 것으로 설정한다.
 
      `return <div className="logout">로그아웃</div>;`
+
+# ch4. Props로 데이터 전달하기
+
+## Props란?
+
+부모 컴퍼넌트가 자식 컴퍼넌트들에게 원하는 값을 전달해 줄 수 있다. 이때 컴퍼넌트에 전달된 값을 Props라 부른다.
+
+![image](https://github.com/Jiae25/onebite-react/assets/77441385/3a3aef86-754e-434d-9400-c4661676d5f0)
+
+부모
+
+```
+function App() {
+
+  return (
+    <>
+      <Button text={"메일"} />
+      <Button text={"카페"}/>
+      <Button text={"블로그"}/>
+    </>
+  );
+}
+```
+
+자식
+
+```
+const Button = (props) => {
+  console.log(props);
+  return <button style={{color: props.color}}>{props.text}</button>;
+};
+```
+
+props 값
+
+```
+{text: '메일'}
+{text: '카페'}
+{text: '블로그'}
+```
+
+props가 무조건 들어올거라고 예상하고 코드를 작성하면 오류가 발생할 수 있다.
+
+→ default 값을 설정한다.
+
+점표기법
+
+```
+const Button = (props) => {
+  console.log(props);
+  return <button style={{ color: props.color }}>{props.text} - {props.color.toUpperCase()}</button>;
+};
+```
+
+구조분해할당
+
+```
+const Button = ({text, color}) => {
+  return <button style={{ color: color }}>{text} - {color.toUpperCase()}</button>;
+};
+```
+
+스프레드연산자 사용
+
+```
+function App() {
+  const buttonProps = {
+    text: "메일",
+    color: "red",
+    a: 1,
+    b: 2,
+    c: 3,
+  };
+  return (
+    <>
+      <Button {...buttonProps} />
+```
