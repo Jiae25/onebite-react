@@ -1,5 +1,7 @@
-const Button = ({text, color}) => {
-  return <button style={{ color: color }}>{text} - {color.toUpperCase()}</button>;
+const Button = ({text, color, children}) => {
+  return <button style={{ color: color }}>
+    {text} - {color.toUpperCase()}
+    {children}</button>;
 };
 
 Button.defaultProps = {

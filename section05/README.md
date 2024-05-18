@@ -190,7 +190,7 @@ export default Main;
 
 ![image](https://github.com/Jiae25/onebite-react/assets/77441385/3a3aef86-754e-434d-9400-c4661676d5f0)
 
-부모
+부모 컴포넌트
 
 ```
 function App() {
@@ -205,7 +205,7 @@ function App() {
 }
 ```
 
-자식
+자식 컴포넌트
 
 ```
 const Button = (props) => {
@@ -224,37 +224,69 @@ props 값
 
 props가 무조건 들어올거라고 예상하고 코드를 작성하면 오류가 발생할 수 있다.
 
-→ default 값을 설정한다.
-
-점표기법
+→ props의 default 값을 설정한다.
 
 ```
-const Button = (props) => {
-  console.log(props);
-  return <button style={{ color: props.color }}>{props.text} - {props.color.toUpperCase()}</button>;
-};
+Button.defaultProps = {
+  color: "black",
+}
 ```
 
-구조분해할당
+### Props를 사용하는 방법
 
-```
-const Button = ({text, color}) => {
-  return <button style={{ color: color }}>{text} - {color.toUpperCase()}</button>;
-};
-```
+- 점표기법
 
-스프레드연산자 사용
-
-```
-function App() {
-  const buttonProps = {
-    text: "메일",
-    color: "red",
-    a: 1,
-    b: 2,
-    c: 3,
+  ```
+  const Button = (props) => {
+    console.log(props);
+    return <button style={{ color: props.color }}>{props.text} - {props.color.toUpperCase()}</button>;
   };
-  return (
-    <>
-      <Button {...buttonProps} />
-```
+  ```
+
+- props는 매개변수에 객체 형태의 값이 무조건 들어온다
+
+  그러므로 객체의 구조분해할당을 이용
+
+  ```
+  const Button = ({text, color}) => {
+    return <button style={{ color: color }}>{text} - {color.toUpperCase()}</button>;
+  };
+  ```
+
+- props로 여러 값을 전달해야 된다면, 스프레드연산자를 사용
+
+  buttonProps라는 객체에 있는 프로퍼티의 값을 개별로 Button 컴퍼넌트의 props로 전달해준다.
+
+  ```
+  function App() {
+    const buttonProps = {
+      text: "메일",
+      color: "red",
+      a: 1,
+      b: 2,
+      c: 3,
+    };
+    return (
+      <>
+        <Button {...buttonProps} />
+  ```
+
+- 자식요소는 자동으로 children 이라는 props로 전달된다.
+
+  ```
+  <Button text={"블로그"}>
+    <div> 자식요소</div>
+  </Button>
+  ```
+
+  ```
+  const Button = ({text, color, children}) => {
+    return <button style={{ color: color }}>
+    {text} - {color.toUpperCase()}
+    {children}</button>;
+  };
+  ```
+
+**Props는 부모 컴퍼넌트에서 자식 컴퍼넌트로만 전달할 수 있다.**
+
+반대로 자식 → 부모 컴퍼넌트로 값을 전달하는 것은 React에서는 불가능하다.
