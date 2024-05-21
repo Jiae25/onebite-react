@@ -290,3 +290,74 @@ Button.defaultProps = {
 **Props는 부모 컴퍼넌트에서 자식 컴퍼넌트로만 전달할 수 있다.**
 
 반대로 자식 → 부모 컴퍼넌트로 값을 전달하는 것은 React에서는 불가능하다.
+
+# ch5. 이벤트 핸들링
+
+## 이벤트 핸들링이란?
+
+Event Handling
+
+- Event : 웹 내부에서 발생하는 사용자의 행동
+  - 버튼 클릭, 메세지 입력, 스크롤 등
+- Handling : 다루다, 취급하다, 처리하다
+
+=> 이벤트가 발생했을 떄 그것을 처리하는 것
+
+ex) 버튼 클릭 시 경고창 노출
+
+이벤트 핸들러
+
+- onClick 속성의 익명함수로 설정
+
+```
+const Button = ({ text, color, children }) => {
+
+return <button
+  onClick={() => {
+    console.log(text);
+  }}
+  style={{ color: color }}>
+  {text} - {color.toUpperCase()}
+  {children}</button>;
+};
+```
+
+- 또는 화살표 함수 사용
+
+```
+const Button = ({ text, color, children }) => {
+const onClickButton = () => {
+  console.log(text);
+};
+
+return <button
+  onClick={onClickButton}
+  style={{ color: color }}>
+  {text} - {color.toUpperCase()}
+  {children}</button>;
+};
+```
+
+주의점
+
+함수의 이름을 전달해야하는데 함수의 호출결과를 전달하면 안된다.
+
+### 이벤트 객체
+
+이벤트 핸들러 함수를 호출하면서 호출된 이벤트 핸들러 함수에 매개 변수로 이벤트 객체를 제공한다.
+
+```
+const Button = ({ text, color, children }) => {
+  // 이벤트 객체가 매개변수로 제공된다.
+  const onClickButton = (e) => {
+    console.log(e);
+    console.log(text);
+  };
+```
+
+- SyntheticBaseEvent 객체가 매개변수 e에 저장된 이벤트 객체이다.
+- 합성 이벤트(Synthetic Base Event)
+  - 브라우저마다 규격, 동작 방식이 달라서 생기는 문제를 Cross Brwsing Issue 라 하는데
+  - 합성 이벤트가 모든 브라우저에서의 이벤트 객체를 하나로 통일한 형태이다.
+  - 모든 브라우저에서 사용할 수 있는 통합된 규격의 객체
+  - 발생한 이벤트 관련 정보가 들어있다.
