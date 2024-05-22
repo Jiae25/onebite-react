@@ -363,3 +363,61 @@ const Button = ({ text, color, children }) => {
   - 합성 이벤트가 모든 브라우저에서의 이벤트 객체를 하나로 통일한 형태이다.
   - 모든 브라우저에서 사용할 수 있는 통합된 규격의 객체
   - 발생한 이벤트 관련 정보가 들어있다.
+
+# ch6. State로 상태관리하기
+
+## State란?
+
+현재 가지고 있는 형태나 모양을 정의
+
+State는 변화할 수 있다.
+
+State를 갖는 React 컴포넌트를 만들어서 상태 변화를 감지하여 자동으로 컴포넌트를 다시 렌더링한다. 이것을 **리렌더 (Re-Render)** 또는 **리렌더링 (Re-Rendering)** 이라고 한다.
+
+하나의 컴포넌트에 여러 개의 state를 가질 수 있다.
+
+![image](https://github.com/Jiae25/onebite-react/assets/77441385/dc2b763c-93f3-4c14-9335-83c34f640571)
+
+## State 생성하기
+
+함수 컴포넌트에서 State를 생성하려면 먼저 리액트가 제공하는 내장 함수인 `useState`를 사용해야 한다.
+
+```
+import { useState } from "react";
+```
+
+`useState`를 함수를 호출해서 `state` 변수에 담았다.
+
+```
+const state = useState();
+```
+
+`useState`는 두 개의 요소를 담은 배열을 반환한다.
+
+- 첫 번째 요소: 새롭게 생성된 state의 값
+  - `useState()`일 땐 undefined가 나오고
+    `const state = useState(0);`와 같이 초기값을 0이라고 넣어주면 0이 출력된다.
+- 두 번째 요소: state를 변경시키는 상태변화 함수
+- 일반적으로 아래와 같이 구조분해 후 할당 받는다.
+  - state = 값
+  - setState = 함수
+
+```
+const [state, setState] = useState(0);
+```
+
+- App 컴포넌트의 State가 변경되었다는 것을 감지해서 이 컴포넌트를 리렌더링 해준다.
+
+  ```
+  function App() {
+    const [state, setState] = useState(0);
+    return (
+      <>
+        <h1>{state}</h1>
+        <button onClick={() => {
+          setState(state + 1);
+        }}>+</button>
+      </>
+    );
+  }
+  ```
