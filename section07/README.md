@@ -116,3 +116,12 @@ useEffect(() => {
 - useEffect 의 콜백함수가 반환하는 함수를 클립업 또는 정리함수라고 부른다.
 - 정리함수는 useEffect가 끝날 때 실행된다.
 - 위와 같이 depth를 빈 배열로 주면 마운트 될 때 실행이 되고, 종료는 언마운트 될 때 종료되기 때문에 그 때 이 정리함수를 호출하게 된다.
+
+## ch4. React 개발자 도구 사용하기
+
+### React Developer Tools 설치
+
+https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=ko
+
+- 리액트 앱 개발 시 컴포넌트의 상태, state 값, props 등 확인 가능
+- 설정에서 컴포넌트 렌더 옵션 체크 시 불필요하게 리렌더링이 발생하고 있는 컴포넌트는 뭐가 있는지 등의 것들을 쉽게 찾을 수 있다.
