@@ -71,3 +71,48 @@ Currently, two official plugins are available:
   따라서 `Console.log`가 실행될 때 `setCount()` 함수가 호출만 됐지 완료된 것은 아니다.
 
 - 결과적으로 `useEffect`를 이용해야 된다.
+
+## ch3. useEffect로 라이프사이클 제어하기
+
+### 1. 마운트 : 탄생
+
+```
+  useEffect(() => {
+    console.log("mount");
+  }, []);
+```
+
+- 첫 번째 인수에는 callback 함수를 넣고 두 번째 depth에는 빈 배열을 넣어주면 된다.
+- useEffect는 depth에 있는 값이 변경되어야만 실행이 되기 때문에 이 callback 함수는 이 컴포넌트가 처음 mount 될 때 이후에는 다시는 실행되지 않는다.
+- 컴포넌트가 마운트 되었을 때만 딱 한 번 실행시키고 싶은 코드가 있다면 이를 활용하면 된다.
+
+### 2. 업데이트 : 변화, 리렌더링
+
+```
+  useEffect(() => {
+    if (!isMount.current) {
+      isMount.current = true;
+      return;
+    }
+    console.log("update");
+  });
+```
+
+- 첫 번째 인수로 callback 함수를 넣고 두 번째 인수인 depth는 생략한다.
+- 이렇게만 depth를 생략하면 마운트 될 때 한 번 실행된 후 이 컴퍼넌트가 리렌더링 될 때마다 즉, 업데이트 될 때마다 계속 실행된다.
+- 마운트 시점을 제외하고 업데이트 될 때만 콜백함수를 실행하고 싶다면 `usdRef`를 이용하여 마운트 되었는지 확인할 수 있는 `isMount` flag를 만들어 조건문으로 확인한다.
+
+### 3. 언마운트 : 죽음
+
+```
+useEffect(() => {
+    // 클린업, 정리합수
+    return () => {
+      console.log("unmount");
+    };
+  }, [])
+```
+
+- useEffect 의 콜백함수가 반환하는 함수를 클립업 또는 정리함수라고 부른다.
+- 정리함수는 useEffect가 끝날 때 실행된다.
+- 위와 같이 depth를 빈 배열로 주면 마운트 될 때 실행이 되고, 종료는 언마운트 될 때 종료되기 때문에 그 때 이 정리함수를 호출하게 된다.
