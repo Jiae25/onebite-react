@@ -3,9 +3,10 @@ import { useReducer } from 'react';
 // reducer : 변환기
 // -> 상태를 실제로 변화시키는 변환기 역할
 function reducer(state, action) {
-  console.log(state, action);
-  if (action.type === "INCREASE") {
-    return state + action.data;
+  switch (action.type) {
+    case 'INCREASE': return state + action.data;
+    case 'DECREASE': return state - action.data;
+    default: return state;
   }
 }
 
@@ -23,10 +24,18 @@ const Exam = () => {
     });
   };
 
+  const onClickMinus = () => {
+    dispatch({
+      type: "DECREASE",
+      data: 1,
+    })
+  }
+
   return (
     <div>
       <h1>{state}</h1>
       <button onClick={onClickPlus}>+</button>
+      <button onClick={onClickMinus}>-</button>
     </div>
   )
 }
