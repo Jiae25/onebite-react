@@ -43,3 +43,16 @@ Memoization : 기억해주기, 메모해두기 라는 뜻
 동일한 연산을 반복적으로 수행해야할 때, 매번 계산하도록 하지 않고,
 
 최초로 한 번 계산했을 떄 결과값을 메모리에 저장해두고 다시 이 연산이 필요해지면 저장되어 있던 결과값을 돌려준다.
+
+# ch3. React.memo와 컴포넌트 렌더링 최적화
+
+## React.memo란?
+
+컴포넌트를 인수로 받아, 최적화된 컴포넌트로 만들어 반환
+
+`const MemoizedComponent = memo(Component)`
+
+Parent(부모) → MemoizedComponent(memo로 최적화 됨)
+
+- 리렌더링 X
+- Props는 바뀌지 않음
