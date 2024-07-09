@@ -28,6 +28,8 @@ Currently, two official plugins are available:
 - 컴포넌트 내부의 불필요한 함수 재생성 방지
 - 컴포넌트의 불필요한 리렌더링 방지
 
+=> 최적화는 기능 구현 먼저 한 후 최적화를 진행한다.
+
 # ch2. useMemo와 연산 최적화
 
 ## useMemo란?
