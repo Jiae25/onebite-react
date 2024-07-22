@@ -1,10 +1,34 @@
 import './App.css'
-import { useState, useRef, useReducer, useCallback } from 'react';
+import {
+  useState,
+  useRef,
+  useReducer,
+  useCallback,
+  createContext
+} from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
 
 const mockData = [
+  {
+    id: 0, 
+    isDone: false,
+    content: "React 공부하기",
+    date: new Date().getTime(),
+  },
+  {
+    id: 1,
+    isDone: false,
+    content: "빨래하기",
+    date: new Date().getTime(),
+  },
+  {
+    id: 2,
+    isDone: false,
+    content: "노래 연습하기",
+    date: new Date().getTime(),
+  },
 ];
 
 function reducer(state, action){
@@ -18,6 +42,9 @@ function reducer(state, action){
       return state;
   }
 }
+
+export const TodoContext = createContext();
+
 function App() {
   
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -53,8 +80,19 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      <TodoContext.Provider
+        value={{
+          todos,
+          onCreate,
+          onUpdate,
+          onDelete,
+      }}>
+        <Editor/>
+        <List
+          todos={todos}
+          onUpdate={onUpdate}
+          onDelete={onDelete} />
+      </TodoContext.Provider>
     </div>
   )
 }
