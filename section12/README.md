@@ -106,18 +106,84 @@ BrowserRouter로 App 컴포넌트를 감싸주면 리액트 앱의 모든 컴포
 
 - Routes 컴포넌트 바깥에 배치된 요소들은 페이지 라우팅과는 관련 없이, 모든 페이지에 동일하게 렌더링이 된다.
 
-```
-function App() {
-  return (
-    <>
-      <div>Hello</div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/diary" element={<Diary />} />
-        <Route path="*" element={<Notfound />} />
-      </Routes>
-    </>
-  )
-}
-```
+  ```
+  function App() {
+    return (
+      <>
+        <div>Hello</div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/new" element={<New />} />
+          <Route path="/diary" element={<Diary />} />
+          <Route path="*" element={<Notfound />} />
+        </Routes>
+      </>
+    )
+  }
+  ```
+
+# ch4. 페이지 라우팅 - 3. 페이지 이동
+
+## Link 를 이용한 페이지 이동
+
+- Link 컴포넌트 추가
+
+  ```
+  import { Routes, Route, Link } from "react-router-dom";
+
+  function App() {
+    return (
+      <>
+        <div>
+          <Link to={"/"} >Home</Link>
+          <Link to={"/new"} >New</Link>
+          <Link to={"/diary"} >Diary</Link>
+        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/new" element={<New />} />
+          <Route path="/diary" element={<Diary />} />
+          <Route path="*" element={<Notfound />} />
+        </Routes>
+      </>
+    )
+  }
+  ```
+
+- 클라이언트 사이드 렌더링 방식으로 페이지 이동
+
+- 페이지를 날려버리고 새롭게 렌더링 하는 것이 아니라 필요한 컴포넌트만 교체한다.
+
+- 페이지를 이동하는데 페이지가 새로고침되지 않고 빠른 속도로 쾌적하게 페이지 이동이 제공된다.
+
+## 특정 이벤트가 발생했을 때 페이지 이동
+
+- useNavigate 컴포넌트 추가
+
+  ```
+  import { Routes, Route, Link, useNavigate } from "react-router-dom";
+
+  function App() {
+    const nav = useNavigate();
+
+    const onClickButton = () => {
+      nav("/new");
+    }
+    return (
+      <>
+        <div>
+          <Link to={"/"} >Home</Link>
+          <Link to={"/new"} >New</Link>
+          <Link to={"/diary"} >Diary</Link>
+        </div>
+        <button onClick={onClickButton}>New 페이지로 이동</button>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/new" element={<New />} />
+          <Route path="/diary" element={<Diary />} />
+          <Route path="*" element={<Notfound />} />
+        </Routes>
+      </>
+    )
+  }
+  ```
