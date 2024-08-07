@@ -77,3 +77,47 @@ ex) /new → new 페이지 렌더링
 ⇒ 클라이언트 사이드 렌더링 (Client Side Rendering)
 
 ![image](https://github.com/user-attachments/assets/2be1a58f-33a4-4c84-a169-d39cb445dd36)
+
+# ch3. 페이지 라우팅 - 2. 라우팅 설정하기
+
+### 이번 시간에 이용할 라이브러리
+
+### React Router
+
+[npmjs.com](http://npmjs.com) 에 등록되어 있는 라이브러리
+
+대다수의 리액트 앱이 사용하고 있는 대표격 라이브러리
+
+~~모르면 간첩~~
+
+### BrowserRouter
+
+BrowserRouter로 App 컴포넌트를 감싸주면 리액트 앱의 모든 컴포넌트들이 페이지 라우팅과 관련된 모든 데이터들을 공급받아서 사용할 수 있게 된다.
+
+```
+<BrowserRouter>
+    <App />
+</BrowserRouter>
+```
+
+### 주의점
+
+- Routes 안에는 Route 컴포넌트만 쓸 수 있다.
+
+- Routes 컴포넌트 바깥에 배치된 요소들은 페이지 라우팅과는 관련 없이, 모든 페이지에 동일하게 렌더링이 된다.
+
+```
+function App() {
+  return (
+    <>
+      <div>Hello</div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/new" element={<New />} />
+        <Route path="/diary" element={<Diary />} />
+        <Route path="*" element={<Notfound />} />
+      </Routes>
+    </>
+  )
+}
+```
