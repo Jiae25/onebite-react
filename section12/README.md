@@ -187,3 +187,70 @@ BrowserRouter로 App 컴포넌트를 감싸주면 리액트 앱의 모든 컴포
     )
   }
   ```
+
+# ch5. 페이지 라우팅 - 4. 동적 경로
+
+## 동적 경로(Dynamic Segments)란?
+
+동적인 데이터를 포함하고 있는 경로
+
+### URL Parameter
+
+/ 뒤에 아이템의 id를 명시
+
+- ~/product/**1**
+- ~/product/**2**
+- ~/product/**3**
+
+=> 아이템의 id 등의 변경되지 않는 값을 주소로 명시하기 위해 사용됨
+
+### Query String
+
+? 뒤에 변수명과 값 명시
+
+- ~/search?**q=검색어**
+
+=> 검색어 등의 자주 변경되는 값을 주소로 명시하기 위해 사용됨
+
+```
+<Route path="/diary/:id" element={<Diary />} />
+```
+
+- path props에 `/:값` 이 있다면 이 값은 동적 경로인 URL 파라미터를 의미한다.
+
+### URL Parameter 사용하기 위한 useParams 호출
+
+useParams 라는 훅은 현재 브라우저에 명시한 이 URL 파라미터의 값을 가져오는 기능을 하는 커스텀 훅이다.
+
+```
+import { useParams } from 'react-router-dom';
+
+const Diary = () => {
+  const params = useParams();
+  console.log(params);
+
+  return <div>{params.id}번 일기입니다.</div>;
+};
+
+export default Diary;
+
+```
+
+### Query String 사용하기 위한 useSearchParams 호출
+
+parmas 변수에 useState를 썼던 것처럼 QueryString으로 전달한 변수와 값들이 들어온다.
+
+setParams에는 특정 QueryString의 값을 변경할 수 있는 함수가 들어오게 된다.
+
+```
+import { useSearchParams } from 'react-router-dom';
+
+const Home = () => {
+  const [params, setParams] = useSearchParams();
+  console.log(params.get("value"))
+
+  return <div>Home</div>;
+};
+
+export default Home;
+```
