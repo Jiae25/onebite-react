@@ -1,5 +1,5 @@
 import './App.css'
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
 import { Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import Diary from './pages/Diary';
@@ -27,14 +27,37 @@ const mockData = [
 ];
 
 function reducer(state, action) {
-  return state;
+  switch (action.type) {
+    case 'CREATE': return [action.data, ...state];
+  }
 }
 
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
+  const idRef = useRef(3)
 
+  // 새로운 일기 추가
+  const onCreate = (createdDate, emotionId, content) => {
+    // 새로운 일기를 추가하는 기능
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: idRef.current++,
+        createdDate,
+        emotionId,
+        content,
+      },
+    })
+  }
+
+  // 기존 일기 수정
+  
+  // 기존 일기 삭제
   return (
     <>
+      <button onClick={() => {
+        onCreate(new Date().getTime(), 1, "Hello");
+      }}>일기 추가 테스트</button>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<New />} />
